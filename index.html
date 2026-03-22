@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Next Gen Business Cup – Partnerschaft Pitch Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal-light: #ACDBDF;
+  --teal: #65B8C8;
+  --cream: #F7F3EB;
+  --red: #941A16;
+  --green: #007752;
+  --dark: #1a1a2e;
+  --darker: #0f0f1a;
+  --white: #ffffff;
+  --gray: #888;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--darker);
+  color: var(--white);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* NAV */
+#sidebar {
+  position: fixed; left:0; top:0; width:240px; height:100vh;
+  background: rgba(15,15,26,0.95);
+  border-right: 1px solid rgba(101,184,200,0.15);
+  z-index:100; display:flex; flex-direction:column;
+  padding: 20px 0;
+  transition: transform 0.3s;
+}
+#sidebar.hidden { transform: translateX(-240px); }
+#sidebar .logo-area { text-align:center; padding:10px 15px 20px; border-bottom:1px solid rgba(101,184,200,0.15); }
+#sidebar .logo-area img { width:100px; }
+#sidebar .chapters { flex:1; overflow-y:auto; padding:15px 0; }
+#sidebar .chapter {
+  padding: 10px 20px; cursor:pointer; font-size:12px; font-weight:500;
+  color: rgba(255,255,255,0.5); transition: all 0.3s; border-left: 3px solid transparent;
+  line-height:1.4;
+}
+#sidebar .chapter:hover { color: var(--teal-light); }
+#sidebar .chapter.active { color: var(--teal); border-left-color: var(--teal); background: rgba(101,184,200,0.05); font-weight:700; }
+
+/* COUNTER */
+#counter {
+  position:fixed; top:20px; right:30px; z-index:100;
+  font-size:14px; font-weight:600; color:rgba(255,255,255,0.5);
+  letter-spacing:1px;
+}
+
+/* TOGGLE NAV */
+#navToggle {
+  position:fixed; top:20px; left:20px; z-index:200;
+  background:rgba(101,184,200,0.15); border:none; color:var(--white);
+  width:36px; height:36px; border-radius:50%; cursor:pointer;
+  font-size:18px; display:flex; align-items:center; justify-content:center;
+  transition:0.3s;
+}
+#navToggle:hover { background:rgba(101,184,200,0.3); }
+
+/* SLIDES */
+.slide {
+  position: absolute; top:0; left:240px; right:0; bottom:0;
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; visibility:hidden; transition: opacity 0.5s, transform 0.5s;
+  transform: translateY(30px);
+  padding: 60px 80px;
+}
+.slide.active { opacity:1; visibility:visible; transform:translateY(0); }
+.slide-inner { width:100%; max-width:1100px; text-align:center; }
+
+/* TYPO */
+h1 { font-size:56px; font-weight:900; line-height:1.1; margin-bottom:20px; }
+h2 { font-size:42px; font-weight:800; line-height:1.15; margin-bottom:16px; }
+h3 { font-size:28px; font-weight:700; line-height:1.3; margin-bottom:12px; }
+.subtitle { font-size:20px; font-weight:400; color:rgba(255,255,255,0.7); line-height:1.5; }
+.big-number { font-size:96px; font-weight:900; color:var(--teal); line-height:1; }
+.accent { color:var(--teal); }
+.accent-green { color:var(--green); }
+.accent-red { color:var(--red); }
+.tag { display:inline-block; background:var(--teal); color:var(--darker); padding:4px 14px; border-radius:20px; font-size:13px; font-weight:700; margin:3px; }
+.tag-outline { display:inline-block; border:1px solid var(--teal); color:var(--teal); padding:4px 14px; border-radius:20px; font-size:13px; font-weight:600; margin:3px; }
+.tag-red { display:inline-block; background:var(--red); color:var(--white); padding:4px 14px; border-radius:20px; font-size:13px; font-weight:700; margin:3px; }
+
+/* GRID */
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:40px; text-align:left; }
+.grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:30px; text-align:left; }
+.grid4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:20px; text-align:center; }
+
+/* CARDS */
+.card {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px; padding:30px; text-align:left;
+}
+.card h3 { font-size:20px; margin-bottom:10px; }
+.card p { font-size:14px; color:rgba(255,255,255,0.6); line-height:1.6; }
+.card-highlight { border-color:var(--teal); background:rgba(101,184,200,0.06); }
+
+/* COMPARE TABLE */
+.compare-table { width:100%; border-collapse:collapse; font-size:15px; text-align:left; }
+.compare-table th { padding:12px 16px; font-weight:700; border-bottom:2px solid var(--teal); font-size:14px; }
+.compare-table td { padding:12px 16px; border-bottom:1px solid rgba(255,255,255,0.06); }
+.compare-table tr td:first-child { font-weight:600; color:rgba(255,255,255,0.7); }
+
+/* FLOW ARROW */
+.flow { display:flex; align-items:center; justify-content:center; gap:0; flex-wrap:wrap; margin:30px 0; }
+.flow-step {
+  background:rgba(101,184,200,0.12); border:1px solid rgba(101,184,200,0.25);
+  border-radius:12px; padding:20px 24px; min-width:140px; text-align:center;
+}
+.flow-step h4 { font-size:16px; font-weight:700; color:var(--teal); margin-bottom:4px; }
+.flow-step p { font-size:12px; color:rgba(255,255,255,0.5); }
+.flow-arrow { font-size:28px; color:var(--teal); margin:0 8px; }
+
+/* BAR */
+.bar-container { margin:12px 0; text-align:left; }
+.bar-label { font-size:13px; font-weight:600; margin-bottom:4px; display:flex; justify-content:space-between; }
+.bar-track { height:10px; background:rgba(255,255,255,0.08); border-radius:5px; overflow:hidden; }
+.bar-fill { height:100%; background: linear-gradient(90deg, var(--green), var(--teal)); border-radius:5px; transition:width 1s; }
+
+/* STATS ROW */
+.stat-row { display:flex; justify-content:center; gap:50px; margin:30px 0; }
+.stat { text-align:center; }
+.stat .num { font-size:52px; font-weight:900; color:var(--teal); }
+.stat .label { font-size:14px; color:rgba(255,255,255,0.6); margin-top:4px; }
+
+/* TIMELINE */
+.timeline { display:flex; align-items:stretch; gap:0; margin:20px 0; }
+.tl-block { flex:1; padding:16px; border-left:3px solid var(--teal); position:relative; }
+.tl-block .time { font-size:12px; font-weight:700; color:var(--teal); margin-bottom:4px; }
+.tl-block .desc { font-size:13px; color:rgba(255,255,255,0.7); line-height:1.4; }
+
+/* PACKAGE TABLE */
+.pkg-table { width:100%; border-collapse:collapse; }
+.pkg-table th { padding:14px; font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+.pkg-table td { padding:10px 14px; font-size:13px; border-bottom:1px solid rgba(255,255,255,0.04); }
+.pkg-table .check { color:var(--teal); font-weight:700; }
+.pkg-table .cross { color:rgba(255,255,255,0.15); }
+
+/* CTA */
+.cta-box {
+  background:linear-gradient(135deg, var(--green), var(--teal));
+  border-radius:20px; padding:40px; text-align:center; margin-top:20px;
+}
+.cta-box h2 { color:var(--white); }
+.cta-box p { color:rgba(255,255,255,0.85); font-size:18px; }
+
+/* DIVIDER */
+.divider { width:60px; height:3px; background:var(--teal); margin:16px auto; border-radius:2px; }
+
+/* ICON CIRCLE */
+.icon-circle {
+  width:60px; height:60px; border-radius:50%;
+  background:rgba(101,184,200,0.12); border:1px solid rgba(101,184,200,0.25);
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; margin:0 auto 12px;
+}
+
+/* SECTION LABEL */
+.section-label {
+  font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:3px;
+  color:var(--teal); margin-bottom:12px;
+}
+
+.text-left { text-align:left; }
+.mb-10 { margin-bottom:10px; }
+.mb-20 { margin-bottom:20px; }
+.mb-30 { margin-bottom:30px; }
+.mt-20 { margin-top:20px; }
+.mt-30 { margin-top:30px; }
+
+/* Responsive */
+@media (max-width:1200px) {
+  #sidebar { width:200px; }
+  .slide { left:200px; padding:40px 50px; }
+  h1 { font-size:42px; }
+  h2 { font-size:34px; }
+  .big-number { font-size:72px; }
+}
+</style>
+</head>
+<body>
+
+<button id="navToggle" onclick="toggleNav()">☰</button>
+
+<div id="sidebar">
+  <div class="logo-area">
+    <img src="data:image/jpeg;base64,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" alt="NGBC Logo">
+  </div>
+  <div class="chapters" id="chapterNav"></div>
+</div>
+
+<div id="counter"></div>
+
+<!-- ====== SECTION 1: EINSTIEG ====== -->
+
+<div class="slide" data-chapter="Einstieg & Positionierung">
+  <div class="slide-inner">
+    <div class="section-label">19. September 2026 · Strassenkicker Base Köln</div>
+    <h1>NEXT GEN<br><span class="accent">BUSINESS CUP</span></h1>
+    <div class="divider"></div>
+    <p class="subtitle">Wo Karriere auf den Platz trifft.</p>
+    <p class="subtitle" style="font-size:16px; margin-top:30px;">8 Hochschulteams · Karrieremesse · Next Gen Stage · 1.000 Besucher<br>3.500 m² · Lukas Podolskis Soccerhalle</p>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Einstieg & Positionierung">
+  <div class="slide-inner">
+    <h2>Das Event in <span class="accent">einem Slide</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card">
+        <div class="icon-circle">⚽</div>
+        <h3>Fußballturnier</h3>
+        <p>8 Kölner Wirtschaftshochschulen treten gegeneinander an. Gruppenphase, K.O.-Runde, Finale – echter Wettbewerb.</p>
+      </div>
+      <div class="card">
+        <div class="icon-circle">🤝</div>
+        <h3>Karrieremesse</h3>
+        <p>Urbaner Talent-Hub mit Ausstellerflächen, Business Impact Rooms, CV-Speed-Dating und digitalem Matching.</p>
+      </div>
+      <div class="card">
+        <div class="icon-circle">🎙️</div>
+        <h3>NextGen Stage</h3>
+        <p>Live-Podcasts, Panels und Talks zu Karriere, Leadership und Employer Branding auf separater Bühne.</p>
+      </div>
+    </div>
+    <p class="subtitle mt-30">Ein von Studierenden organisiertes Format, das Sport, Recruiting und Netzwerk vereint.</p>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Einstieg & Positionierung">
+  <div class="slide-inner">
+    <div class="section-label">Vision & Leitmotiv</div>
+    <h1 style="font-size:48px;">„Karriere passiert <span class="accent">nicht</span><br>am Messestand."</h1>
+    <div class="divider"></div>
+    <p class="subtitle" style="max-width:700px; margin:0 auto;">Ein von Studierenden organisiertes Event, das den Weg ins Berufsleben ebnet – durch authentische Begegnungen statt steriler Standflächen. Sport, Recruiting und Netzwerk unter einem Dach.</p>
+  </div>
+</div>
+
+<!-- ====== SECTION 2: PROBLEM ====== -->
+
+<div class="slide" data-chapter="Problem & Marktverständnis">
+  <div class="slide-inner">
+    <div class="section-label">Problem & Marktverständnis</div>
+    <h2>Warum Recruiting sich <span class="accent-red">verändert</span></h2>
+    <div class="divider"></div>
+    <div class="stat-row mt-30">
+      <div class="stat"><div class="num">73%</div><div class="label">der Gen Z wünschen sich<br>authentische Einblicke</div></div>
+      <div class="stat"><div class="num">61%</div><div class="label">der HR-Entscheider beklagen<br>fehlenden Cultural Fit</div></div>
+      <div class="stat"><div class="num">3×</div><div class="label">höhere Bindung durch<br>emotionale Erstkontakte</div></div>
+    </div>
+    <p class="subtitle mt-30">War for Talents + Gen Z Anforderungen = Unternehmen brauchen neue Wege zu jungen Talenten.</p>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Problem & Marktverständnis">
+  <div class="slide-inner">
+    <h2>Probleme klassischer <span class="accent-red">Recruiting-Kanäle</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-20">
+      <div class="card" style="border-color:var(--red);">
+        <h3>🎪 Karrieremessen</h3>
+        <p>Steril, austauschbar, geringe Verweildauer. Besucher laufen vorbei, Gespräche bleiben oberflächlich.</p>
+      </div>
+      <div class="card" style="border-color:var(--red);">
+        <h3>📱 Jobportale</h3>
+        <p>Screening-Overload: Hunderte Bewerbungen, kaum Einblick in die echte Persönlichkeit der Kandidaten.</p>
+      </div>
+      <div class="card" style="border-color:var(--red);">
+        <h3>💬 Gesprächsqualität</h3>
+        <p>Zu kurz, zu formell, kein Cultural Fit spürbar. Die entscheidende Frage bleibt offen: Passen wir zusammen?</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Problem & Marktverständnis">
+  <div class="slide-inner">
+    <h2>NextGen vs. <span class="accent-red">Klassische Formate</span></h2>
+    <div class="divider"></div>
+    <table class="compare-table mt-30">
+      <tr><th></th><th style="color:var(--red)">Klassisch</th><th style="color:var(--teal)">Next Gen Business Cup</th></tr>
+      <tr><td>Atmosphäre</td><td>Steril & formell</td><td>Authentisch & emotional</td></tr>
+      <tr><td>Verweildauer</td><td>Ø 45 Min.</td><td>Ø 4+ Stunden</td></tr>
+      <tr><td>Gesprächsqualität</td><td>Oberflächlich</td><td>Tiefgehend, echtes Kennenlernen</td></tr>
+      <tr><td>Content-Output</td><td>Gering</td><td>Social Media, Video, Employer Branding</td></tr>
+      <tr><td>Employer Branding</td><td>Stand-Design</td><td>Gelebte Unternehmenskultur</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ====== SECTION 3: LÖSUNG ====== -->
+
+<div class="slide" data-chapter="Lösung & USP">
+  <div class="slide-inner">
+    <div class="section-label">Unsere Lösung</div>
+    <h2>Sport trifft <span class="accent">Karriere</span></h2>
+    <div class="divider"></div>
+    <div class="grid2 mt-30">
+      <div style="text-align:left;">
+        <p class="subtitle" style="font-size:18px; line-height:1.7;">Wir schaffen ein Format, das Studierende, Unternehmen und Hochschulen in einem authentischen, emotionalen Setting zusammenbringt. Fußball schafft, was Messe-Smalltalk nicht kann: echte Begegnungen.</p>
+        <div class="mt-20">
+          <div class="tag">Sport</div>
+          <div class="tag">Networking</div>
+          <div class="tag">Recruiting</div>
+          <div class="tag">Content</div>
+          <div class="tag">Community</div>
+        </div>
+      </div>
+      <div>
+        <div class="card card-highlight">
+          <h3 class="accent">Die Formel</h3>
+          <p style="font-size:16px; line-height:1.7; color:rgba(255,255,255,0.8);">Fußballturnier + Karrieremesse + Content-Bühne = Einzigartiger Recruiting-Kanal mit maximalem Employer-Branding-Effekt</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Lösung & USP">
+  <div class="slide-inner">
+    <h2>Warum Sport <span class="accent">funktioniert</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card card-highlight" style="text-align:center;">
+        <div style="font-size:48px; margin-bottom:12px;">🫱🏼‍🫲🏽</div>
+        <h3>Vertrauen</h3>
+        <p>Gemeinsame Erlebnisse schaffen in Minuten, was klassische Gespräche in Stunden nicht erreichen.</p>
+      </div>
+      <div class="card card-highlight" style="text-align:center;">
+        <div style="font-size:48px; margin-bottom:12px;">❤️‍🔥</div>
+        <h3>Emotion</h3>
+        <p>Adrenalin, Teamgeist, Freude – emotionale Settings erzeugen bleibende Erinnerungen und stärkere Markenassoziation.</p>
+      </div>
+      <div class="card card-highlight" style="text-align:center;">
+        <div style="font-size:48px; margin-bottom:12px;">🚀</div>
+        <h3>Niedrige Hemmschwelle</h3>
+        <p>Kein Dresscode, keine steifen Gespräche. Talent und Unternehmen begegnen sich auf Augenhöhe.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Lösung & USP">
+  <div class="slide-inner">
+    <h2>Klare <span class="accent">Differenzierung</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card">
+        <h3>≠ Karrieremesse</h3>
+        <p>Nicht statisch. Nicht austauschbar. Sondern: Besucher erleben Unternehmen in Aktion, nicht hinter dem Stand.</p>
+      </div>
+      <div class="card">
+        <h3>≠ Sportevent</h3>
+        <p>Nicht nur Entertainment. Sondern: Jeder Spielzug schafft einen Gesprächsanlass. Sport als Recruiting-Katalysator.</p>
+      </div>
+      <div class="card">
+        <h3>≠ Speed-Dating</h3>
+        <p>Nicht oberflächlich. Sondern: Tiefe Einblicke in Persönlichkeit, Teamfähigkeit und Cultural Fit – während des Spiels.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 4: ERLEBNIS ====== -->
+
+<div class="slide" data-chapter="Erlebnis & Mechanik">
+  <div class="slide-inner">
+    <div class="section-label">Erlebnis & Mechanik</div>
+    <h2>Tagesstruktur</h2>
+    <div class="divider"></div>
+    <div class="timeline mt-30">
+      <div class="tl-block"><div class="time">10:00–12:00</div><div class="desc">Einlass, Karrieremesse, Speed-Networking – voller Fokus auf Karriere</div></div>
+      <div class="tl-block"><div class="time">12:00</div><div class="desc">Inszenierte Öffnung der Spielfelder, Warm-up</div></div>
+      <div class="tl-block"><div class="time">13:00–16:00</div><div class="desc">Gruppenphase, Messe bleibt offen, Half-Time Business Talks</div></div>
+      <div class="tl-block"><div class="time">16:00–19:00</div><div class="desc">K.O.-Phase, Finale, Sonderspiel der Unternehmensvertreter</div></div>
+      <div class="tl-block"><div class="time">Ab 19:00</div><div class="desc">Siegerehrung, After-Show-Party, ggf. WM Watchparty</div></div>
+    </div>
+    <p class="subtitle mt-20">Von Karriere über Wettbewerb bis zum Feiern – ein Tag voller Touchpoints.</p>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Erlebnis & Mechanik">
+  <div class="slide-inner">
+    <h2>Das <span class="accent">Turnierformat</span></h2>
+    <div class="divider"></div>
+    <div class="stat-row mt-20">
+      <div class="stat"><div class="num">8</div><div class="label">Teams</div></div>
+      <div class="stat"><div class="num">2</div><div class="label">Gruppen</div></div>
+      <div class="stat"><div class="num">2</div><div class="label">Spielfelder parallel</div></div>
+    </div>
+    <div class="flow mt-20">
+      <div class="flow-step"><h4>Gruppenphase</h4><p>2 Gruppen à 4</p></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><h4>Halbfinale</h4><p>Champions Pitch</p></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><h4>Finale</h4><p>Große Bühne</p></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><h4>Siegerehrung</h4><p>Sponsor-Präsenz</p></div>
+    </div>
+    <p class="subtitle mt-20">Echtes Wettkampffeeling, maximale Emotionen – und Sponsoring-Flächen an den Banden.</p>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Erlebnis & Mechanik">
+  <div class="slide-inner">
+    <h2>Der <span class="accent">Erlebnis-Pfad</span></h2>
+    <div class="divider"></div>
+    <div class="flow mt-30">
+      <div class="flow-step" style="background:rgba(0,119,82,0.15); border-color:var(--green);"><h4 style="color:var(--green);">Erlebnis</h4><p>Sport, Atmosphäre,<br>emotionale Bindung</p></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><h4>Gespräch</h4><p>Business Impact Rooms,<br>Networking, Austausch</p></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><h4>Match</h4><p>AI-CV-Matching,<br>Speed-Dating</p></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step"><h4>Follow-up</h4><p>Post-Event Reporting,<br>Lead-Qualifizierung</p></div>
+    </div>
+    <p class="subtitle mt-20">Vom ersten Eindruck zum qualifizierten Kontakt – ein nahtloser Funnel.</p>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Erlebnis & Mechanik">
+  <div class="slide-inner">
+    <h2>Unser <span class="accent">Recruiting-Modell</span></h2>
+    <div class="divider"></div>
+    <div class="grid4 mt-30">
+      <div class="card"><div class="icon-circle">⚽</div><h3>Turnier</h3><p>Echte Persönlichkeiten unter Druck sichtbar machen.</p></div>
+      <div class="card"><div class="icon-circle">🎯</div><h3>Authentik</h3><p>Echte Atmosphäre statt Messestand-Smalltalk.</p></div>
+      <div class="card"><div class="icon-circle">💼</div><h3>Speed-Dating</h3><p>CV-Sessions in Business Impact Rooms mit echtem Match.</p></div>
+      <div class="card"><div class="icon-circle">📸</div><h3>Content</h3><p>Social Proof: Video, Interviews, Employer Branding.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 5: ZIELGRUPPE ====== -->
+
+<div class="slide" data-chapter="Zielgruppe & Talentzugang">
+  <div class="slide-inner">
+    <div class="section-label">Zielgruppe & Talentzugang</div>
+    <h2>Unsere <span class="accent">Zielgruppen</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card card-highlight">
+        <h3>🎓 Studierende</h3>
+        <p><strong>Primär</strong> – BWL-Studierende der Kölner Wirtschaftshochschulen, 20–26 Jahre. Suchen Praxisnähe, echte Einblicke.</p>
+        <div class="mt-10"><span class="tag-outline">Instagram</span> <span class="tag-outline">LinkedIn</span></div>
+      </div>
+      <div class="card">
+        <h3>🧑‍🎓 Abiturienten</h3>
+        <p><strong>Sekundär</strong> – 17–19 Jahre, unsicher bei Studienwahl. Suchen Inspiration in lockerer Atmosphäre.</p>
+        <div class="mt-10"><span class="tag-outline">TikTok</span> <span class="tag-outline">Instagram</span></div>
+      </div>
+      <div class="card">
+        <h3>👔 HR-Entscheider</h3>
+        <p><strong>B2B</strong> – 35–50 Jahre, unter Druck durch Fachkräftemangel. Suchen Cultural Fit und qualifizierte Leads.</p>
+        <div class="mt-10"><span class="tag-outline">LinkedIn</span> <span class="tag-outline">Direct Sales</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Zielgruppe & Talentzugang">
+  <div class="slide-inner">
+    <h2>Profile der <span class="accent">Besucher</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div>
+        <h3 class="mb-10">Studiengänge</h3>
+        <div class="tag">BWL</div><div class="tag">Management</div><div class="tag">Sports Management</div><div class="tag">Marketing</div><div class="tag">Finance</div><div class="tag">International Business</div>
+      </div>
+      <div>
+        <h3 class="mb-10">Motivation</h3>
+        <div class="bar-container"><div class="bar-label"><span>Karriere & Netzwerk</span><span>85%</span></div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div></div>
+        <div class="bar-container"><div class="bar-label"><span>Sport & Spaß</span><span>75%</span></div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div></div>
+        <div class="bar-container"><div class="bar-label"><span>Erlebnis & Community</span><span>90%</span></div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div></div>
+      </div>
+      <div>
+        <h3 class="mb-10">Leistungsniveau</h3>
+        <p class="subtitle" style="font-size:14px; text-align:left;">Top-Studierende an 8 führenden Kölner Wirtschaftshochschulen. Engagiert, ambitioniert, karriereorientiert – die zukünftige Business-Elite der Region.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Zielgruppe & Talentzugang">
+  <div class="slide-inner">
+    <h2>Hochschulen & <span class="accent">Talentquellen</span></h2>
+    <div class="divider"></div>
+    <div class="grid4 mt-30">
+      <div class="card" style="text-align:center;"><h3 style="font-size:16px;">ISM Köln</h3></div>
+      <div class="card" style="text-align:center;"><h3 style="font-size:16px;">Universität zu Köln</h3></div>
+      <div class="card" style="text-align:center;"><h3 style="font-size:16px;">CEMS Club Cologne</h3></div>
+      <div class="card" style="text-align:center;"><h3 style="font-size:16px;">CBS International</h3></div>
+      <div class="card" style="text-align:center;"><h3 style="font-size:16px;">Rheinische HS</h3></div>
+      <div class="card" style="text-align:center;"><h3 style="font-size:16px;">FOM Hochschule</h3></div>
+      <div class="card" style="text-align:center;"><h3 style="font-size:16px;">HS Fresenius</h3></div>
+      <div class="card" style="text-align:center;"><h3 style="font-size:16px;">TH Köln</h3></div>
+    </div>
+    <p class="subtitle mt-20">Direkter Zugang zu den ambitioniertesten Wirtschaftsstudierenden Kölns.</p>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Zielgruppe & Talentzugang">
+  <div class="slide-inner">
+    <h2>Teilnehmer & <span class="accent">Reichweite</span></h2>
+    <div class="divider"></div>
+    <div class="stat-row mt-20">
+      <div class="stat"><div class="num">~830</div><div class="label">Besucher gesamt</div></div>
+      <div class="stat"><div class="num">350</div><div class="label">Karrieremesse-Besucher</div></div>
+      <div class="stat"><div class="num">112</div><div class="label">Spieler + Betreuer</div></div>
+    </div>
+    <div class="grid2 mt-20" style="max-width:700px; margin:20px auto 0;">
+      <div class="text-left">
+        <div class="bar-container"><div class="bar-label"><span>Karrieremesse-Besucher</span><span>350</span></div><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div></div>
+        <div class="bar-container"><div class="bar-label"><span>Team-Supporter</span><span>200</span></div><div class="bar-track"><div class="bar-fill" style="width:24%"></div></div></div>
+        <div class="bar-container"><div class="bar-label"><span>Spieler & Betreuer</span><span>112</span></div><div class="bar-track"><div class="bar-fill" style="width:14%"></div></div></div>
+      </div>
+      <div class="text-left">
+        <div class="bar-container"><div class="bar-label"><span>Sponsorenvertreter</span><span>45</span></div><div class="bar-track"><div class="bar-fill" style="width:5%"></div></div></div>
+        <div class="bar-container"><div class="bar-label"><span>Walk-Ins</span><span>50</span></div><div class="bar-track"><div class="bar-fill" style="width:6%"></div></div></div>
+        <div class="bar-container"><div class="bar-label"><span>Orga + Personal</span><span>50</span></div><div class="bar-track"><div class="bar-fill" style="width:6%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 6: RECRUITING IMPACT ====== -->
+
+<div class="slide" data-chapter="Recruiting Impact">
+  <div class="slide-inner">
+    <div class="section-label">Recruiting Impact</div>
+    <h2>Recruiting-Flächen & <span class="accent">Formate</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card card-highlight">
+        <div class="icon-circle">📍</div>
+        <h3>Recruiting Area</h3>
+        <p>Ausstellerflächen in 3 Zonen: Spotlight (Pitch-Nähe), NextGen-Stage, Foyer. Bis zu 17 Standflächen.</p>
+      </div>
+      <div class="card card-highlight">
+        <div class="icon-circle">🚪</div>
+        <h3>Business Impact Rooms</h3>
+        <p>Exklusive Räume für Case-Sessions, Interviews, CV-Speed-Dating und Vertragsgespräche.</p>
+      </div>
+      <div class="card card-highlight">
+        <div class="icon-circle">💬</div>
+        <h3>Gesprächsformate</h3>
+        <p>Speed-Networking, offenes Networking, CV-Sessions und Bühnen-Slots – für jeden Bedarf das richtige Format.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Recruiting Impact">
+  <div class="slide-inner">
+    <h2>AI-CV-Matching & <span class="accent">Leadgenerierung</span></h2>
+    <div class="divider"></div>
+    <div class="grid2 mt-30">
+      <div class="text-left">
+        <h3 class="mb-20">Qualität statt Quantität</h3>
+        <p class="subtitle" style="font-size:16px; text-align:left; line-height:1.7;">Unser AI-gestütztes CV-Matching analysiert die Profile der Studierenden und matcht sie mit den Anforderungen der Partner. Das Ergebnis: vorqualifizierte Leads, keine kalten Kontakte.</p>
+        <div class="mt-20">
+          <div class="tag">Pre-Event Matching</div>
+          <div class="tag">Qualifizierte Leads</div>
+          <div class="tag">Digital Follow-up</div>
+        </div>
+      </div>
+      <div>
+        <div class="flow" style="flex-direction:column; gap:12px;">
+          <div class="flow-step" style="width:100%;"><h4>1. Upload</h4><p>Studierende laden CV hoch</p></div>
+          <div class="flow-arrow" style="transform:rotate(90deg);">→</div>
+          <div class="flow-step" style="width:100%;"><h4>2. AI Match</h4><p>Algorithmus identifiziert Top-Matches</p></div>
+          <div class="flow-arrow" style="transform:rotate(90deg);">→</div>
+          <div class="flow-step" style="width:100%;"><h4>3. Meet</h4><p>Gezielte Gespräche vor Ort</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Recruiting Impact">
+  <div class="slide-inner">
+    <h2>Recruiting-KPIs & <span class="accent">Erfolgsmessung</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card" style="text-align:center;"><div class="big-number" style="font-size:48px;">Leads</div><p class="mt-10">Anzahl qualifizierter Kontakte pro Partner</p></div>
+      <div class="card" style="text-align:center;"><div class="big-number" style="font-size:48px;">Talks</div><p class="mt-10">Durchgeführte Impact-Room-Sessions</p></div>
+      <div class="card" style="text-align:center;"><div class="big-number" style="font-size:48px;">Reach</div><p class="mt-10">Impressions auf Social Media</p></div>
+    </div>
+    <p class="subtitle mt-30">Jeder Partner erhält ein Post-Event-Reporting mit konkreten Zahlen und Auswertungen.</p>
+  </div>
+</div>
+
+<!-- ====== SECTION 7: PAKETE ====== -->
+
+<div class="slide" data-chapter="Partnerschaftspakete">
+  <div class="slide-inner">
+    <div class="section-label">Partnerschaftspakete</div>
+    <h2>Modulare <span class="accent">Partnerschafts-Logik</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card">
+        <h3 style="color:var(--teal-light);">Partner</h3>
+        <p style="font-size:28px; font-weight:900; color:var(--teal-light); margin:10px 0;">1.500 €</p>
+        <p>Einstiegspaket mit Foyer-Präsenz, Logo-Platzierung und offenem Networking.</p>
+      </div>
+      <div class="card card-highlight">
+        <h3 style="color:var(--teal);">Premium</h3>
+        <p style="font-size:28px; font-weight:900; color:var(--teal); margin:10px 0;">4.000 €</p>
+        <p>Erweitert um NextGen-Stage-Fläche, Business Impact Room und hervorgehobene Sichtbarkeit.</p>
+      </div>
+      <div class="card" style="border-color:var(--green); background:rgba(0,119,82,0.06);">
+        <h3 style="color:var(--green);">Hauptpartner</h3>
+        <p style="font-size:28px; font-weight:900; color:var(--green); margin:10px 0;">8.000 €</p>
+        <p>Maximale Präsenz: Spotlight Zone, Bühnen-Slot, Siegerehrung, Pitch-Banden.</p>
+      </div>
+    </div>
+    <p class="subtitle mt-20">Alle Preise netto · Flexible Bandbreite je nach Unternehmensgröße</p>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Partnerschaftspakete">
+  <div class="slide-inner">
+    <h2>Paket-<span class="accent">Vergleich</span></h2>
+    <div class="divider"></div>
+    <table class="pkg-table mt-20">
+      <tr><th></th><th style="color:var(--teal-light)">Partner</th><th style="color:var(--teal)">Premium</th><th style="color:var(--green)">Hauptpartner</th></tr>
+      <tr><td>Ausstellerfläche</td><td class="check">✓ Foyer</td><td class="check">✓ Stage-Bereich</td><td class="check">✓ Spotlight Zone</td></tr>
+      <tr><td>Logo auf Website</td><td class="check">✓</td><td class="check">✓ hervorgehoben</td><td class="check">✓ Top-Platzierung</td></tr>
+      <tr><td>Partnerboard</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>Social Media Post</td><td class="check">Sammel-Post</td><td class="check">✓</td><td class="check">✓</td></tr>
+      <tr><td>Business Impact Room</td><td class="cross">–</td><td class="check">1 Slot (30 Min.)</td><td class="check">2 Slots (1 Stunde)</td></tr>
+      <tr><td>Bühnen-Slot</td><td class="cross">–</td><td class="cross">–</td><td class="check">15 Min. NextGen Stage</td></tr>
+      <tr><td>Siegerehrung</td><td class="cross">–</td><td class="cross">–</td><td class="check">✓</td></tr>
+      <tr><td>Pitch-Banden</td><td class="cross">–</td><td class="cross">–</td><td class="check">✓ Champions Pitch</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Partnerschaftspakete">
+  <div class="slide-inner">
+    <h2>Add-ons & <span class="accent">Erweiterungen</span></h2>
+    <div class="divider"></div>
+    <div class="grid2 mt-20" style="font-size:14px;">
+      <div class="text-left">
+        <h3 class="mb-10 accent">Branding & Sichtbarkeit</h3>
+        <p style="color:rgba(255,255,255,0.7); line-height:1.8;">Banner an Event-Hotspots · ab 300 €<br>Goodie-Integration · 300 €<br>Pitch-Banden / Spielfeld-Branding · ab 1.500 €<br>Naming „powered by …" · ab 1.500 €</p>
+        <h3 class="mt-20 mb-10 accent">Content</h3>
+        <p style="color:rgba(255,255,255,0.7); line-height:1.8;">Bühnen-Slot (15–30 Min.) · ab 500 €<br>Mitgestaltung Programmpunkt · ab 1.500 €</p>
+      </div>
+      <div class="text-left">
+        <h3 class="mb-10 accent">Recruiting</h3>
+        <p style="color:rgba(255,255,255,0.7); line-height:1.8;">Zusätzlicher Impact Room Slot · ab 300 €<br>Exklusive Room-Blöcke (bis 3h) · ab 1.000 €</p>
+        <h3 class="mt-20 mb-10 accent">Experience</h3>
+        <p style="color:rgba(255,255,255,0.7); line-height:1.8;">Sportliche Challenge „presented by" · ab 500 €<br>Beteiligung gemeinsame Challenge · ab 200 €</p>
+        <h3 class="mt-20 mb-10 accent">Digital</h3>
+        <p style="color:rgba(255,255,255,0.7); line-height:1.8;">Social-Media Story · 100 €<br>Featured Partner Website · ab 300 €<br>Individueller Post (Foto/Video) · ab 250 €</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Partnerschaftspakete">
+  <div class="slide-inner">
+    <h2>Exklusivität & <span class="accent-red">limitierte Slots</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card" style="text-align:center; border-color:var(--red);">
+        <div class="big-number" style="font-size:64px; color:var(--red);">max. 2</div>
+        <p class="mt-10" style="font-weight:600;">Hauptpartner</p>
+      </div>
+      <div class="card" style="text-align:center; border-color:var(--red);">
+        <div class="big-number" style="font-size:64px; color:var(--red);">max. 5</div>
+        <p class="mt-10" style="font-weight:600;">Premiumpartner</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div class="big-number" style="font-size:64px;">max. 8</div>
+        <p class="mt-10" style="font-weight:600;">Partner</p>
+      </div>
+    </div>
+    <p class="subtitle mt-30">Limitierte Plätze = exklusive Wettbewerbsvorteile. Frühzeitig sichern!</p>
+  </div>
+</div>
+
+<!-- ====== SECTION 8: BRAND ====== -->
+
+<div class="slide" data-chapter="Brand & Visibility">
+  <div class="slide-inner">
+    <div class="section-label">Brand & Visibility</div>
+    <h2>Brand Visibility <span class="accent">vor Ort</span></h2>
+    <div class="divider"></div>
+    <div class="grid2 mt-30">
+      <div class="text-left">
+        <h3 class="mb-20">Branding-Flächen</h3>
+        <p class="subtitle" style="font-size:15px; text-align:left; line-height:1.8;">
+          ✓ Pitch-Banden am Champions Pitch<br>
+          ✓ Banner an Event-Hotspots<br>
+          ✓ Logo auf zentralem Partnerboard<br>
+          ✓ Naming einzelner Programmpunkte<br>
+          ✓ Goodie-Integration<br>
+          ✓ Standflächen in 3 Zonen
+        </p>
+      </div>
+      <div class="text-left">
+        <h3 class="mb-20">Event-Zonen</h3>
+        <p class="subtitle" style="font-size:15px; text-align:left; line-height:1.8;">
+          <strong class="accent">Spotlight Zone:</strong> Höchste Frequenz, Pitch-Nähe<br>
+          <strong class="accent">NextGen-Stage:</strong> Content-Nähe, Publikum<br>
+          <strong class="accent">Foyer:</strong> Empfang, Networking<br>
+          <strong class="accent">Champions Pitch:</strong> Finale, Banden-Branding<br>
+          <strong class="accent">Business Impact Rooms:</strong> Exklusive Gespräche
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Brand & Visibility">
+  <div class="slide-inner">
+    <h2>Digitale Reichweite & <span class="accent">Social Media</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card card-highlight" style="text-align:center;">
+        <div style="font-size:36px; margin-bottom:10px;">📱</div>
+        <h3>Instagram</h3>
+        <p>Stories, Reels, Feed-Posts. Live-Content vom Event, Behind-the-Scenes, Interviews.</p>
+      </div>
+      <div class="card card-highlight" style="text-align:center;">
+        <div style="font-size:36px; margin-bottom:10px;">💼</div>
+        <h3>LinkedIn</h3>
+        <p>B2B-Sichtbarkeit, Post-Event-Content, Partner-Features, Employer-Branding-Storys.</p>
+      </div>
+      <div class="card card-highlight" style="text-align:center;">
+        <div style="font-size:36px; margin-bottom:10px;">🌐</div>
+        <h3>Website</h3>
+        <p>Partner-Profil mit Logo, Verlinkung, Featured-Section und Recruitingpage-Integration.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Brand & Visibility">
+  <div class="slide-inner">
+    <h2>Content & <span class="accent">Storytelling</span></h2>
+    <div class="divider"></div>
+    <div class="grid2 mt-30">
+      <div>
+        <div class="card card-highlight mb-20">
+          <h3>🎬 Video-Content</h3>
+          <p>Professionelle Event-Highlights, Partner-Interviews, Spielzusammenfassungen – nutzbar für eigene Kanäle.</p>
+        </div>
+        <div class="card card-highlight">
+          <h3>🎤 Interviews & Stories</h3>
+          <p>Individuelle Partner-Interviews auf der NextGen Stage oder am Spielfeldrand – authentisch und emotional.</p>
+        </div>
+      </div>
+      <div>
+        <div class="card mb-20">
+          <h3>📸 Foto-Content</h3>
+          <p>Professionelle Event-Fotografie. Gebrandet, hochwertig und direkt nutzbar für Social Media und Karriereseiten.</p>
+        </div>
+        <div class="card">
+          <h3>📊 Post-Event Reporting</h3>
+          <p>Daten, Reichweite, Leads, Content-Output – alles gebündelt in einem detaillierten Reporting für jeden Partner.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Brand & Visibility">
+  <div class="slide-inner">
+    <h2>Der <span class="accent">Employer Branding</span> Effekt</h2>
+    <div class="divider"></div>
+    <div class="grid2 mt-30">
+      <div class="text-left">
+        <p class="subtitle" style="font-size:18px; text-align:left; line-height:1.7;">Emotionale Settings erzeugen stärkere Markenbindung. Wenn Studierende ein Unternehmen in einem positiven, energiegeladenen Kontext erleben, verankert sich diese Assoziation nachhaltig.</p>
+        <div class="mt-20">
+          <div class="tag">Emotionale Verankerung</div>
+          <div class="tag">Authentizität</div>
+          <div class="tag">Peer-to-Peer</div>
+          <div class="tag">Social Proof</div>
+        </div>
+      </div>
+      <div>
+        <div class="card card-highlight" style="text-align:center;">
+          <div class="big-number" style="font-size:72px;">4+h</div>
+          <p class="mt-10" style="font-size:16px; font-weight:600;">Ø Verweildauer</p>
+          <p class="mt-10" style="font-size:13px; color:rgba(255,255,255,0.5);">vs. ~45 Min. auf klassischen Messen</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== SECTION 9: VERTRAUEN ====== -->
+
+<div class="slide" data-chapter="Vertrauen & Abschluss">
+  <div class="slide-inner">
+    <div class="section-label">Vertrauen & Abschluss</div>
+    <h2>Organisation & <span class="accent">Team</span></h2>
+    <div class="divider"></div>
+    <div class="grid2 mt-30">
+      <div class="card card-highlight" style="text-align:center;">
+        <h3>Paul Kleiber</h3>
+        <p>General Management<br><span style="color:rgba(255,255,255,0.5);">3. Sem. Sports Management, ISM Köln-Dual</span></p>
+      </div>
+      <div class="card card-highlight" style="text-align:center;">
+        <h3>Paul Schneider</h3>
+        <p>General Management<br><span style="color:rgba(255,255,255,0.5);">5. Sem. International Management, ISM Köln</span></p>
+      </div>
+    </div>
+    <div class="grid4 mt-20" style="font-size:13px;">
+      <div class="card" style="text-align:center; padding:16px;"><strong>Marketing</strong><br><span style="color:var(--gray);">Anesa & Emilia + Team</span></div>
+      <div class="card" style="text-align:center; padding:16px;"><strong>University Contacts</strong><br><span style="color:var(--gray);">Emma & Raissa</span></div>
+      <div class="card" style="text-align:center; padding:16px;"><strong>Finance</strong><br><span style="color:var(--gray);">Killian</span></div>
+      <div class="card" style="text-align:center; padding:16px;"><strong>Sport</strong><br><span style="color:var(--gray);">Rico + Henrik</span></div>
+    </div>
+    <p class="subtitle mt-20">Organisiert vom IS@M e.V. – mit Leidenschaft, Struktur und einem klaren Ziel.</p>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Vertrauen & Abschluss">
+  <div class="slide-inner">
+    <h2>Impact für Köln & <span class="accent">Community</span></h2>
+    <div class="divider"></div>
+    <div class="grid3 mt-30">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:40px; margin-bottom:10px;">🏙️</div>
+        <h3>Köln stärken</h3>
+        <p>Köln als Standort für junge Talente und innovative Recruiting-Formate positionieren.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:40px; margin-bottom:10px;">🤝</div>
+        <h3>Brücken bauen</h3>
+        <p>Hochschulen, Unternehmen und Studierende vernetzen – nachhaltig und langfristig.</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:40px; margin-bottom:10px;">🌱</div>
+        <h3>CSR / ESG</h3>
+        <p>Förderung junger Talente, Sport als verbindendes Element, Community-Engagement vor Ort.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Vertrauen & Abschluss">
+  <div class="slide-inner">
+    <h2>Post-Event <span class="accent">Reporting</span></h2>
+    <div class="divider"></div>
+    <div class="grid2 mt-30">
+      <div class="text-left">
+        <h3 class="mb-20">Was Partner erhalten</h3>
+        <p class="subtitle" style="font-size:15px; text-align:left; line-height:1.8;">
+          ✓ Anzahl qualifizierter Leads & Kontakte<br>
+          ✓ Social-Media-Reichweite & Impressions<br>
+          ✓ Foto- und Video-Content<br>
+          ✓ Feedback der Studierenden<br>
+          ✓ Event-Statistiken & Besucherzahlen<br>
+          ✓ Empfehlungen für Follow-up
+        </p>
+      </div>
+      <div>
+        <div class="card card-highlight" style="text-align:center;">
+          <div style="font-size:48px; margin-bottom:10px;">📊</div>
+          <h3>Datenbasiert</h3>
+          <p>Transparente Auswertung aller KPIs – damit Partner den ROI ihrer Investition klar messen können.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="slide" data-chapter="Vertrauen & Abschluss">
+  <div class="slide-inner">
+    <div class="cta-box">
+      <div class="section-label" style="color:rgba(255,255,255,0.7);">Call to Action</div>
+      <h2 style="font-size:38px;">Werden Sie Teil des<br>Next Gen Business Cup 2026</h2>
+      <div class="divider" style="background:rgba(255,255,255,0.4);"></div>
+      <p style="max-width:600px; margin:0 auto;">Limitierte Partnerslots · Maximale Sichtbarkeit · Echte Talente<br><br>
+      <strong style="font-size:22px;">Lassen Sie uns sprechen.</strong><br><br>
+      <span style="font-size:16px;">nextgenbusinesscup.com</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const chapters = [
+  { name: "Einstieg & Positionierung", icon: "🏠" },
+  { name: "Problem & Marktverständnis", icon: "⚠️" },
+  { name: "Lösung & USP", icon: "💡" },
+  { name: "Erlebnis & Mechanik", icon: "⚙️" },
+  { name: "Zielgruppe & Talentzugang", icon: "🎯" },
+  { name: "Recruiting Impact", icon: "📈" },
+  { name: "Partnerschaftspakete", icon: "📦" },
+  { name: "Brand & Visibility", icon: "👁️" },
+  { name: "Vertrauen & Abschluss", icon: "🤝" }
+];
+
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+
+// Build nav
+const nav = document.getElementById('chapterNav');
+chapters.forEach((ch, i) => {
+  const el = document.createElement('div');
+  el.className = 'chapter';
+  el.textContent = ch.name;
+  el.dataset.chapter = ch.name;
+  el.onclick = () => {
+    const idx = [...slides].findIndex(s => s.dataset.chapter === ch.name);
+    if (idx >= 0) goTo(idx);
+  };
+  nav.appendChild(el);
+});
+
+function goTo(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  updateCounter();
+  updateNav();
+}
+
+function updateCounter() {
+  document.getElementById('counter').textContent = (current+1) + ' / ' + slides.length;
+}
+
+function updateNav() {
+  const cur = slides[current].dataset.chapter;
+  document.querySelectorAll('#chapterNav .chapter').forEach(c => {
+    c.classList.toggle('active', c.dataset.chapter === cur);
+  });
+}
+
+function toggleNav() {
+  document.getElementById('sidebar').classList.toggle('hidden');
+  slides.forEach(s => {
+    s.style.left = document.getElementById('sidebar').classList.contains('hidden') ? '0' : '240px';
+  });
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current+1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(current-1);
+  if (e.key === 'f' || e.key === 'F') {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+});
+
+// Init
+slides[0].classList.add('active');
+updateCounter();
+updateNav();
+</script>
+</body>
+</html>
